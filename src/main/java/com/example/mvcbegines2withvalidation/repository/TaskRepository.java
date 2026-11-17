@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class TaskRepository {
@@ -20,9 +21,8 @@ public class TaskRepository {
 
     @PostConstruct
     public void init() {
-        // Задача 1: Новая, высокий приоритет (1), дедлайн через 2 дня
         Task task1 = new Task(
-                idCounter.incrementAndGet(), // Генерирует ID = 1
+                idCounter.incrementAndGet(),
                 "Изучить Spring MVC",
                 "Разобраться с аннотациями @Controller, @GetMapping и @RequestParam",
                 "NEW",
@@ -31,9 +31,8 @@ public class TaskRepository {
         );
         taskMap.put(task1.getId(), task1);
 
-        // Задача 2: В процессе, средний приоритет (2), дедлайн завтра
         Task task2 = new Task(
-                idCounter.incrementAndGet(), // Генерирует ID = 2
+                idCounter.incrementAndGet(),
                 "Написать тесты для TaskService",
                 "Покрыть юнит-тестами методы создания и обновления задач",
                 "IN_PROGRESS",
@@ -42,9 +41,8 @@ public class TaskRepository {
         );
         taskMap.put(task2.getId(), task2);
 
-        // Задача 3: Завершена, низкий приоритет (3), дедлайн был вчера
         Task task3 = new Task(
-                idCounter.incrementAndGet(), // Генерирует ID = 3
+                idCounter.incrementAndGet(),
                 "Обновить зависимости в pom.xml",
                 "Проверить наличие уязвимостей и обновить версии библиотек",
                 "DONE",
@@ -63,7 +61,15 @@ public class TaskRepository {
     }
 
     public List<Task> findAllByStatus(String status){
+        List<Task> list = getAllTasks();
+        return list.stream()
+                .filter(t-> t.getStatus() == status)
+                .collect(Collectors.toList());
 
+    }
+
+    public Task save(Task task){
+        taskMap.put(idCounter.incrementAndGet(),task);
     }
 
 

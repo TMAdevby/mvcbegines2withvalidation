@@ -10,6 +10,14 @@ public class Task {
     int priority;
     LocalDateTime dueDate;
 
+    public Task(String title, String description, String status, int priority, LocalDateTime dueDate) {
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.priority = priority;
+        this.dueDate = dueDate;
+    }
+
     public Task(Long id, String title, String description, String status, int priority, LocalDateTime dueDate) {
         this.id = id;
         this.title = title;
