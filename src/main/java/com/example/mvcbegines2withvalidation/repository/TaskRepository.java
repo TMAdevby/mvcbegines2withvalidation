@@ -68,8 +68,12 @@ public class TaskRepository {
 
     }
 
-    public void save(Task task){
-        taskMap.put(idCounter.incrementAndGet(),task);
+    public Task save(Task task){
+        if(task.getId() == null || task.getId() == 0L){
+            task.setId(idCounter.incrementAndGet());
+        }
+        taskMap.put(task.getId(), task);
+        return task;
     }
 
 
