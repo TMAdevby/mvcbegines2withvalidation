@@ -75,15 +75,17 @@ public class TaskRepository {
         return task;
     }
 
-    private void deleteById(Long id){
+    public void deleteById(Long id){
         taskMap.remove(id);
     }
 
-    private Map<String, Long> countTasksByStatus() {
+    public Map<String, Long> countTasksByStatus() {
         return getAllTasks().stream()
                 .collect(Collectors.groupingBy(
                         task -> task.getStatus().getValue(),  // ключ группировки (имя статуса)
                         Collectors.counting()             // считаем количество в каждой группе
                 ));
     }
+
+
 }

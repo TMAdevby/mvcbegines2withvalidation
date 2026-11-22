@@ -5,8 +5,8 @@ public class TaskNotFoundException extends RuntimeException{
     public TaskNotFoundException() {
     }
 
-    public TaskNotFoundException(String message) {
-        super(message);
+    public TaskNotFoundException(String id) {
+        super("Task number " + id + " is not found");
     }
 
     public TaskNotFoundException(String message, Throwable cause) {
@@ -17,7 +17,5 @@ public class TaskNotFoundException extends RuntimeException{
         super(cause);
     }
 
-    public TaskNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
+
 }
