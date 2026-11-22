@@ -6,11 +6,11 @@ public class Task {
     Long id;
     String title;
     String description;
-    String status;
+    Status status;
     int priority;
     LocalDateTime dueDate;
 
-    public Task(String title, String description, String status, int priority, LocalDateTime dueDate) {
+    public Task(String title, String description, Status status, int priority, LocalDateTime dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -18,7 +18,7 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Task(Long id, String title, String description, String status, int priority, LocalDateTime dueDate) {
+    public Task(Long id, String title, String description, Status status, int priority, LocalDateTime dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -51,11 +51,11 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

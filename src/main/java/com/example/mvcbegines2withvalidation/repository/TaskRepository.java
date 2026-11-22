@@ -1,13 +1,12 @@
 package com.example.mvcbegines2withvalidation.repository;
 
+import com.example.mvcbegines2withvalidation.model.Status;
 import com.example.mvcbegines2withvalidation.model.Task;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -25,7 +24,7 @@ public class TaskRepository {
                 idCounter.incrementAndGet(),
                 "Изучить Spring MVC",
                 "Разобраться с аннотациями @Controller, @GetMapping и @RequestParam",
-                "NEW",
+                Status.NEW,
                 1,
                 LocalDateTime.now().plusDays(2)
         );
@@ -35,7 +34,7 @@ public class TaskRepository {
                 idCounter.incrementAndGet(),
                 "Написать тесты для TaskService",
                 "Покрыть юнит-тестами методы создания и обновления задач",
-                "IN_PROGRESS",
+                Status.IN_PROGRESS,
                 2,
                 LocalDateTime.now().plusDays(1)
         );
@@ -45,7 +44,7 @@ public class TaskRepository {
                 idCounter.incrementAndGet(),
                 "Обновить зависимости в pom.xml",
                 "Проверить наличие уязвимостей и обновить версии библиотек",
-                "DONE",
+                Status.DONE,
                 3,
                 LocalDateTime.now().minusDays(1)
         );
@@ -60,7 +59,7 @@ public class TaskRepository {
         return Optional.ofNullable(taskMap.get(id));
     }
 
-    public List<Task> findAllByStatus(String status){
+    public List<Task> findAllByStatus(Status status){
         List<Task> list = getAllTasks();
         return list.stream()
                 .filter(t-> t.getStatus() == status)
@@ -76,6 +75,15 @@ public class TaskRepository {
         return task;
     }
 
+    private void deleteById(Long id){
+        taskMap.remove(id);
+    }
 
-
+    private Map<String, Long> countTasksByStatus() {
+        return getAllTasks().stream()
+                .collect(Collectors.groupingBy(
+                        task -> task.getStatus().getValue(),  // ключ группировки (имя статуса)
+                        Collectors.counting()             // считаем количество в каждой группе
+                ));
+    }
 }
