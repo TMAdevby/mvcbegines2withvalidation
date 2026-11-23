@@ -64,7 +64,6 @@ public class TaskRepository {
         return list.stream()
                 .filter(t-> t.getStatus() == status)
                 .collect(Collectors.toList());
-
     }
 
     public Task save(Task task){
@@ -82,8 +81,8 @@ public class TaskRepository {
     public Map<String, Long> countTasksByStatus() {
         return getAllTasks().stream()
                 .collect(Collectors.groupingBy(
-                        task -> task.getStatus().getValue(),  // ключ группировки (имя статуса)
-                        Collectors.counting()             // считаем количество в каждой группе
+                        task -> task.getStatus().name(),
+                        Collectors.counting()
                 ));
     }
 

@@ -2,8 +2,7 @@ package com.example.mvcbegines2withvalidation.controller;
 
 import com.example.mvcbegines2withvalidation.model.Task;
 import com.example.mvcbegines2withvalidation.service.TaskService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -15,8 +14,23 @@ public class TaskContrller {
     public TaskContrller(TaskService taskService) {
         this.taskService = taskService;
     }
-
+    @GetMapping("/")
     public List<Task> getAllTasks(){
+        return taskService.getAllTasks();
+    }
 
+    @GetMapping("/{id}")
+    public Task getTaskById(@PathVariable  long id){
+        return taskService.getTaskById(id);
+    }
+
+    @GetMapping("/status/{status}")
+    public List<Task> getTasksByStatus(@PathVariable String status){
+        return taskService.getTasksByStatus(status);
+    }
+
+    @PostMapping("/")
+    public Task createTask(@RequestBody Task task){
+        return taskService.createTask(task);
     }
 }
