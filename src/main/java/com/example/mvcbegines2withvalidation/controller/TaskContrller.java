@@ -5,6 +5,8 @@ import com.example.mvcbegines2withvalidation.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskContrller {
@@ -42,5 +44,10 @@ public class TaskContrller {
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
+    }
+
+    @GetMapping("/statistics")
+    public Map<String, Long> getTaskStatistics(){
+        return taskService.getTaskStatistics();
     }
 }
