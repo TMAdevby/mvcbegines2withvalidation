@@ -59,7 +59,6 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-
     public Map<String, Long> getTaskStatistics(){
         return taskRepository.countTasksByStatus();
     }

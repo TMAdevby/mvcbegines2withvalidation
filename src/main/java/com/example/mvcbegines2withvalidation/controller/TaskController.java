@@ -9,11 +9,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tasks")
-public class TaskContrller {
+public class TaskController {
 
     private TaskService taskService;
 
-    public TaskContrller(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
     @GetMapping("/")
