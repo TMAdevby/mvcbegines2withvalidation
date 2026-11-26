@@ -1,13 +1,21 @@
 package com.example.mvcbegines2withvalidation.model;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 
 public class Task {
     Long id;
+    @NotBlank(message = "Название задачи не может быть пустым")
+    @Size(max = 100, message = "Название задачи не может превышать 100 символов")
     String title;
+    @Size(max = 500, message = "Описание не может превышать 500 символов")
     String description;
     Status status;
+    @Min(value = 1, message = "Приоритет должен быть не менее 1")
+    @Max(value = 5, message = "Приоритет должен быть не более 5")
     int priority;
+    @FutureOrPresent(message = "Срок выполнения не может быть в прошлом")
     LocalDateTime dueDate;
 
     public Task() {

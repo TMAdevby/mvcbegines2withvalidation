@@ -3,6 +3,7 @@ package com.example.mvcbegines2withvalidation.controller;
 import com.example.mvcbegines2withvalidation.model.Status;
 import com.example.mvcbegines2withvalidation.model.Task;
 import com.example.mvcbegines2withvalidation.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,12 +41,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         return ResponseEntity.status(201).body(taskService.createTask(task));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id,@Valid @RequestBody Task taskDetails) {
         // Если id не существует, getTaskById внутри updateTask выбросит исключение -> 404
         return ResponseEntity.ok(taskService.updateTask(id, taskDetails));
     }
