@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: MVCbegines2WithValidation
 app:
   task:
     # Если true, включается строгая проверка (будет использоваться strictPolicy)
