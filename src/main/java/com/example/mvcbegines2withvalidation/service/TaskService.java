@@ -3,6 +3,7 @@ package com.example.mvcbegines2withvalidation.service;
 import com.example.mvcbegines2withvalidation.exception.TaskNotFoundException;
 import com.example.mvcbegines2withvalidation.model.Status;
 import com.example.mvcbegines2withvalidation.model.Task;
+import com.example.mvcbegines2withvalidation.policy.TaskValidationPolicy;
 import com.example.mvcbegines2withvalidation.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,13 @@ import java.util.Map;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskValidationPolicy validationPolicy;
 
-    public TaskService(TaskRepository taskRepository) {
+    // Spring автоматически подставит нужный бин (strictPolicy или lenientPolicy)
+    // в зависимости от того, что написано в application.yml
+    public TaskService(TaskRepository taskRepository, TaskValidationPolicy validationPolicy) {
         this.taskRepository = taskRepository;
+        this.validationPolicy = validationPolicy;
     }
 
     public List<Task> getAllTasks() {
@@ -37,6 +42,8 @@ public class TaskService {
     }
 
     public Task createTask(Task task) {
+        validationPolicy.validate(task);
+
         if (task.getStatus() == null) {
             task.setStatus(Status.NEW); // Статус по умолчанию
         }
@@ -46,6 +53,9 @@ public class TaskService {
     public Task updateTask(Long id, Task taskDetails) {
         // Если задачи нет, getTaskById сам выбросит TaskNotFoundException -> 404
         Task currentTask = getTaskById(id);
+
+        // Применяем политику и к обновлению
+        validationPolicy.validate(taskDetails);
 
         currentTask.setTitle(taskDetails.getTitle());
         currentTask.setDescription(taskDetails.getDescription());

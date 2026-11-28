@@ -46,4 +46,11 @@ public class GlobalExceptionHandler {
         // Возвращаем 400 Bad Request и карту ошибок: {"title": "Название не может быть пустым", "priority": "Приоритет от 1 до 5"}
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    // 5. НОВЫЙ МЕТОД: Обработка нашего кастомного исключения бизнес-логики
+    @ExceptionHandler(TaskValidationFailedException.class)
+    public ResponseEntity<String> handleTaskValidationFailedException(TaskValidationFailedException ex) {
+        // Возвращаем 400 Bad Request, так как ошибка вызвана некорректными данными по бизнес-правилам
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
